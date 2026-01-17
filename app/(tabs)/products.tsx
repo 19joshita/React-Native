@@ -20,6 +20,7 @@ export type Products = {
   };
   price: number;
   category: string;
+  quantity?: number;
 };
 const Products = () => {
   const router: any = useRouter();
@@ -49,19 +50,27 @@ const Products = () => {
   if (isLoading) {
     return <ActivityIndicator size={30} />;
   }
-  console.log("products=======>", products);
+  if (error) {
+    return (
+      <View>
+        <Text>Error in the projects</Text>
+      </View>
+    );
+  }
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={products}
-        renderItem={({ item }) => (
-          <ProductCart
-            product={item}
-            onPress={() => router.push(`/products/${item?.id}`)}
-          />
-        )}
-      />
-    </View>
+    <>
+      <View style={styles.container}>
+        <FlatList
+          data={products}
+          renderItem={({ item }) => (
+            <ProductCart
+              product={item}
+              onPress={() => router.push(`/products/${item?.id}`)}
+            />
+          )}
+        />
+      </View>
+    </>
   );
 };
 

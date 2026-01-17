@@ -1,12 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
+import { CartProvider } from "@/src/redux/cartContext";
 
 const RootLayout = () => {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <CartProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="products/[id]" options={{ title: "Details" }} />
+      </Stack>
+    </CartProvider>
   );
 };
 

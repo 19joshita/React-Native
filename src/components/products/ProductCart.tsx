@@ -1,14 +1,24 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useCart } from "@/src/redux/cartContext";
 type Props = {
   product: any;
   onPress: () => void;
 };
 
 const ProductCart = ({ product, onPress }: Props) => {
+  const { addToCart } = useCart();
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles?.container} onPress={onPress}>
       <Image source={{ uri: product?.image }} style={styles.image} />
       <View>
         <Text style={styles.title} numberOfLines={1}>
@@ -24,6 +34,11 @@ const ProductCart = ({ product, onPress }: Props) => {
           <Ionicons name="star" size={20} color={"yellow"} />
           {product?.rating?.rate}
         </Text>
+      </View>
+      <View style={styles.cartButtonContainer}>
+        <Pressable onPress={() => addToCart(product)} style={styles.cartButton}>
+          <Text style={styles.cartButtonText}>Add To Cart</Text>
+        </Pressable>
       </View>
     </TouchableOpacity>
   );
@@ -66,5 +81,18 @@ const styles = StyleSheet.create({
   rate: {
     fontSize: 16,
     gap: 4,
+  },
+  cartButtonContainer: {
+    flexDirection: "row",
+    paddingVertical: 10,
+  },
+  cartButton: {
+    backgroundColor: "green",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  cartButtonText: {
+    color: "#fff",
   },
 });
