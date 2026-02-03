@@ -1,4 +1,5 @@
 import { Products } from "@/app/(tabs)/products";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createContext,
   ReactNode,
@@ -6,7 +7,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type CartContextType = {
   cart: Products[];
@@ -64,7 +64,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: (item.quantity ?? 1) + 1 }
-            : item
+            : item,
         );
       }
 
@@ -78,8 +78,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       qty <= 0
         ? prev.filter((item) => item.id !== id)
         : prev.map((item) =>
-            item.id === id ? { ...item, quantity: qty } : item
-          )
+            item.id === id ? { ...item, quantity: qty } : item,
+          ),
     );
   };
 
@@ -91,7 +91,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // 🔹 Total price
   const total = cart.reduce(
     (acc, item) => acc + item.price * (item.quantity ?? 1),
-    0
+    0,
   );
 
   return (
